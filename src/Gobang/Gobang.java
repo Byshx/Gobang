@@ -1,7 +1,7 @@
 package Gobang;
 
 import java.awt.BasicStroke;
-import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -14,7 +14,7 @@ public class Gobang extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JPanel chessBoard = null;
+	private BordGrid chessBoard = null;
 
 	public static void main(String[] args) {
 		new Gobang();
@@ -26,21 +26,23 @@ public class Gobang extends JFrame {
 		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize(); // 获取屏幕大小
 		int width = 1000;
 		int height = 1050;
-		boolean visit[][] = new boolean[15][15];
+		int visit[][] = new int[15][15];
+		for (int i = 0; i < 15; i++) {
+			for (int j = 0; j < 15; j++) {
+				visit[i][j] = -1;
+			}
+		}
 		setSize(width + 10, height);
 		setLocation(dimension.width / 2 - this.getWidth() / 2, dimension.height / 2 - this.getHeight() / 2);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLayout(new BorderLayout());
-		chessBoard = new BordGrid(width);
+		chessBoard = new BordGrid(width, visit);
 		chessBoard.setSize((int) (width * 0.90), (int) (width * 0.90));
-		MouseHit mouseHit = new MouseHit(width / 16, this, visit, 0);
-		chessBoard.addMouseListener(mouseHit);
-		this.add(chessBoard,BorderLayout.CENTER);
-		chessBoard.add(new Chess_BLACK(62, 62));
-		this.add(new Chess_BLACK(62, 62));
-		this.add(new Chess_BLACK(62, 248));
+		setBackground(new Color(209, 167, 78));
+		this.add(chessBoard);
 		setVisible(true);
-	}	 
+		MouseHit mouseHit = new MouseHit(width / 16, visit, chessBoard, this, 1, 0, true);
+		chessBoard.addMouseListener(mouseHit);
+	}
 
 	class BordGrid extends JPanel {
 		/**
@@ -48,9 +50,11 @@ public class Gobang extends JFrame {
 		 */
 		private static final long serialVersionUID = 1L;
 		private int Edge_Length = 0;
+		private int[][] visit = new int[15][15];
 
-		public BordGrid(int Edge_Length) {
+		public BordGrid(int Edge_Length, int[][] visit) {
 			this.Edge_Length = Edge_Length;
+			this.visit = visit;
 		}
 
 		public BordGrid() {
@@ -63,6 +67,7 @@ public class Gobang extends JFrame {
 				g.drawLine(Temp, UnitLength, Temp, UnitLength * 14 + UnitLength);
 				g.drawLine(UnitLength, Temp, UnitLength * 14 + UnitLength, Temp);
 			}
+			g.setColor(Color.BLACK);
 			Graphics2D g2 = (Graphics2D) g;
 			g2.setStroke(new BasicStroke(5.0f));
 			g2.drawLine(UnitLength * 4, UnitLength * 4, UnitLength * 4, UnitLength * 4);
@@ -74,7 +79,22 @@ public class Gobang extends JFrame {
 			g2.drawLine(UnitLength * 4, UnitLength * 12, UnitLength * 4, UnitLength * 12);
 			g2.drawLine(UnitLength * 8, UnitLength * 12, UnitLength * 8, UnitLength * 12);
 			g2.drawLine(UnitLength * 12, UnitLength * 12, UnitLength * 12, UnitLength * 12);
+
+			for (int i = 0; i < 15; i++) {
+				for (int j = 0; j < 15; j++) {
+					if (visit[i][j] == 0) {
+						g.setColor(Color.WHITE);
+						g.fillOval(UnitLength * (j + 1) - 31, UnitLength * (i + 1) - 31, 60, 60);
+					}
+					if (visit[i][j] == 1) {
+						g.setColor(Color.BLACK);
+						g.fillOval(UnitLength * (j + 1) - 31, UnitLength * (i + 1) - 31, 60, 60);
+					}
+				}
+			}
+
 		}
+
 	}
 
 }
