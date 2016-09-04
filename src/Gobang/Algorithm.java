@@ -37,6 +37,10 @@ public class Algorithm {
 	}
 
 	public int getBestY() {
+		for (int i = 0; i < decision.size(); i++) {
+			System.out.print("(" + decision.get(i).rank + " " + decision.get(i).y + " " + decision.get(i).x + ")");
+		}
+		System.out.println();
 		return decision.get(0).y;
 	}
 
@@ -59,7 +63,7 @@ public class Algorithm {
 			if (temp > maxRank)
 				maxRank = temp;
 		}
-		if (countSpecial$2 > 0 && countSpecial$1 + countSpecial$2 >= 2)
+		if (countSpecial$1 + countSpecial$2 >= 2 && countSpecial$1 > 0)
 			return 8; // 等级上升到8
 		countSpecial$1 = 0;
 		countSpecial$2 = 0;
@@ -72,8 +76,8 @@ public class Algorithm {
 			if (temp > maxRank)
 				maxRank = temp;
 		}
-		if (countSpecial$2 > 0 && countSpecial$1 + countSpecial$2 >= 2)
-			return 6; // 等级上升到6
+		if (countSpecial$1 + countSpecial$2 >= 2 && countSpecial$1 > 0)
+			return 7; // 等级上升到6
 		return maxRank;
 	}
 
@@ -125,14 +129,14 @@ public class Algorithm {
 		else if (opponentChessCount >= 3 && emptyCount$1 >= 1 && emptyCount$2 >= 1) {
 			if (maxRank < 8)
 				maxRank = 8;
-		} else if (opponentChessCount >= 3 && (emptyCount$1 >= 1 || emptyCount$2 >= 1)) {
-			if (maxRank < 7)
-				maxRank = 7;
 		} else if (opponentChessCount >= 2
 				&& ((emptyCount$1 > 0 && emptyCount$2 > 1) || (emptyCount$1 > 1 && emptyCount$2 > 0))) {
+			if (maxRank < 6)
+				maxRank = 6;
+		} else if (opponentChessCount >= 2 && emptyCount$1 == 1 && emptyCount$2 == 1) {
 			if (maxRank < 5)
 				maxRank = 5;
-		} else if (opponentChessCount >= 2 && emptyCount$1 == 1 && emptyCount$2 == 1) {
+		} else if (opponentChessCount >= 3 && (emptyCount$1 >= 1 || emptyCount$2 >= 1)) {
 			if (maxRank < 4)
 				maxRank = 4;
 		} else if (opponentChessCount >= 1) {

@@ -36,7 +36,7 @@ public class JudgeWin {
 			}
 		}
 		count--; // 多算了自己一次
-		if (count == 5)
+		if (count >= 5)
 			return true;
 		return false;
 	}
@@ -58,7 +58,7 @@ public class JudgeWin {
 				break;
 		}
 		count--;
-		if (count == 5)
+		if (count >= 5)
 			return true;
 		return false;
 	}
@@ -67,7 +67,7 @@ public class JudgeWin {
 		int locy = y;
 		int locx = x;
 		int count = 0;
-		while (locy >= 0 && locy < 15) {
+		while (locy >= 0 && locy < 15 && locx>=0 && locx<15) {
 			if (map[locy++][locx++] == P)
 				count++;
 			else
@@ -75,14 +75,14 @@ public class JudgeWin {
 		}
 		locy = y;
 		locx = x;
-		while (locy >= 0 && locy < 15) {
+		while (locy >= 0 && locy < 15 && locx>=0 && locx<15) {
 			if (map[locy--][locx--] == P)
 				count++;
 			else
 				break;
 		}
 		count--;
-		if (count == 5)
+		if (count >= 5)
 			return true;
 		return false;
 	}
@@ -91,7 +91,7 @@ public class JudgeWin {
 		int locy = y;
 		int locx = x;
 		int count = 0;
-		while (locy >= 0 && locy < 15) {
+		while (locy >= 0 && locy < 15 && locx>=0 && locx<15) {
 			if (map[locy++][locx--] == P)
 				count++;
 			else
@@ -99,7 +99,7 @@ public class JudgeWin {
 		}
 		locy = y;
 		locx = x;
-		while (locy >= 0 && locy < 15) {
+		while (locy >= 0 && locy < 15 && locx>=0 && locx<15) {
 			if (map[locy--][locx++] == P)
 				count++;
 			else
